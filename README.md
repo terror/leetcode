@@ -1,2 +1,3 @@
-# leetcode
-leetcode grind O_O
+### leetcode
+
+Solutions to various problems on [leetcode](https://leetcode.com/)
