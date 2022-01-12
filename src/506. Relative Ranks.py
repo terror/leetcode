@@ -10,7 +10,10 @@ class Solution:
 
     d = {1: "Gold Medal", 2: "Silver Medal", 3: "Bronze Medal"}
 
-    return [d[y[nums[i]]] if y[nums[i]] in d else str(y[nums[i]]) for i in range(len(nums))]
+    return [
+      d[y[nums[i]]] if y[nums[i]] in d else str(y[nums[i]])
+      for i in range(len(nums))
+    ]
     """
         or just o_o
 

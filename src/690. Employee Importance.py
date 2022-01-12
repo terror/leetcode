@@ -16,7 +16,8 @@ class Solution:
 
   def getImportance(self, employees: List['Employee'], id: int) -> int:
     for i in range(len(employees)):
-      eid, imp, sub = employees[i].id, employees[i].importance, employees[i].subordinates
+      eid, imp, sub = employees[i].id, employees[i].importance, employees[
+        i].subordinates
       self.d[eid] = sub
       self.val[eid] = imp
 

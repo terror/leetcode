@@ -1,5 +1,6 @@
 class Solution:
-  def sumEvenAfterQueries(self, A: List[int], queries: List[List[int]]) -> List[int]:
+  def sumEvenAfterQueries(self, A: List[int],
+                          queries: List[List[int]]) -> List[int]:
     s, ans = 0, []
 
     for i in A:

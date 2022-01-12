@@ -2,7 +2,8 @@ class Solution:
   def __init__(self):
     self.n = self.m = self.start = 0
 
-  def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+  def floodFill(self, image: List[List[int]], sr: int, sc: int,
+                newColor: int) -> List[List[int]]:
     if image[sr][sc] == newColor:
       return image
 
