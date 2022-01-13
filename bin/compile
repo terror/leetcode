@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 
+import json
 import os
 import requests
-import json
+import textwrap
 from dataclasses import dataclass
 from functools import cached_property
 from typing import List
+
+DIFF = {1: 'Easy', 2: 'Medium', 3: 'Hard'}
+EXT = {'.py': 'Python'}
 
 @dataclass
 class Problem:
@@ -20,12 +24,12 @@ class Problem:
     return Problem(
       id=entry['question__title_slug'],
       name=entry['question__title'],
-      difficulty=entry.get('difficulty', {}).get('level'),
+      difficulty=entry['level'],
       solution=
       f'https://github.com/terror/leetcode/blob/master/src/{entry["question__title_slug"]}.py',
       link=f'https://leetcode.com/problems/{entry["question__title_slug"]}',
       acceptance_ratio=round(
-        int(entry['total_acs']) / int(entry['total_submitted']), 2
+        int(entry['total_acs']) / int(entry['total_submitted']), 1
       ) * 100
     )
 
@@ -39,7 +43,7 @@ class Client:
   def problems(self) -> List[Problem]:
     return list(
       map(
-        lambda entry: Problem.from_json(entry['stat']),
+        lambda entry: Problem.from_json({**entry['stat'], **entry['difficulty']}),
         requests.get(self.url).json()['stat_status_pairs']
       )
     )
@@ -51,11 +55,23 @@ class Client:
     return found[0]
 
 class File:
-  def __init__(self, path: str = '../README.md'):
+  def __init__(self, path: str = 'README.md'):
     self.path = path
+    self.buffer = open(path, 'w')
 
   def update(self, problems):
-    print(problems)
+    self.buffer.write('### Leetcode\n\n')
+
+    self.buffer.write(
+      'Solutions to various problems on [Leetcode](https://leetcode.com/). Feel free to ping me to chat about any of the solutions in `/src`.\n\n'
+    )
+
+    table = '\n| Name | Difficulty | Solution |  Link | Acceptance |\n| --- | --- | --- | --- | --- |\n'
+    for problem in problems:
+      table += f'| {problem.name} | {DIFF[problem.difficulty]} | [{EXT[problem.solution[problem.solution.rfind("."):]]}]({problem.solution}) | [{problem.link}]({problem.link}) | {problem.acceptance_ratio}% |\n'
+    self.buffer.write(table)
+
+    self.buffer.close()
 
 def main(problem_ids: List[str]):
   client, file = Client(), File()
@@ -66,9 +82,7 @@ if __name__ == '__main__':
   try:
     main(
       list(
-        map(
-          lambda filename: filename[:filename.rfind('.')], os.listdir('../src')
-        )
+        map(lambda filename: filename[:filename.rfind('.')], os.listdir('src'))
       )
     )
   except Exception as error:
