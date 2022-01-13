@@ -29,8 +29,8 @@ class Problem:
       f'https://github.com/terror/leetcode/blob/master/src/{entry["question__title_slug"]}.py',
       link=f'https://leetcode.com/problems/{entry["question__title_slug"]}',
       acceptance_ratio=round(
-        int(entry['total_acs']) / int(entry['total_submitted']), 1
-      ) * 100
+        int(entry['total_acs']) / int(entry['total_submitted']) * 100, 2
+      )
     )
 
 class Client:
@@ -43,7 +43,9 @@ class Client:
   def problems(self) -> List[Problem]:
     return list(
       map(
-        lambda entry: Problem.from_json({**entry['stat'], **entry['difficulty']}),
+        lambda entry: Problem.from_json({
+          **entry['stat'], **entry['difficulty']
+        }),
         requests.get(self.url).json()['stat_status_pairs']
       )
     )
