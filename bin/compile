@@ -45,7 +45,7 @@ class Client:
     )
 
   def find(self, id: str) -> Problem:
-    found = list(filter(lambda problem: problem.id == id), self.problems)
+    found = list(filter(lambda problem: problem.id == id, self.problems))
     if len(found) == 0:
       return None
     return found[0]
@@ -54,15 +54,22 @@ class File:
   def __init__(self, path: str = '../README.md'):
     self.path = path
 
+  def update(self, problems):
+    print(problems)
+
 def main(problem_ids: List[str]):
-  client = Client()
-  print(client.problems)
+  client, file = Client(), File()
+  problems = list(map(lambda problem_id: client.find(problem_id), problem_ids))
+  file.update(problems)
 
 if __name__ == '__main__':
-  main(
-    list(
-      map(
-        lambda filename: filename[:filename.rfind('.')], os.listdir('../src')
+  try:
+    main(
+      list(
+        map(
+          lambda filename: filename[:filename.rfind('.')], os.listdir('../src')
+        )
       )
     )
-  )
+  except Exception as error:
+    print(f'error: {str(error)}')

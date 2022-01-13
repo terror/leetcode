@@ -5,3 +5,6 @@ default:
 
 fmt:
 	yapf --in-place --recursive **/*.py bin/*
+
+compile:
+  ./bin/compile
