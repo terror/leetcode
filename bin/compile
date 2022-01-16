@@ -53,7 +53,6 @@ class Client:
   def find(self, id: str) -> Problem:
     found = list(filter(lambda problem: problem.id == id, self.problems))
     if len(found) == 0:
-      print(id)
       return None
     return found[0]
 
