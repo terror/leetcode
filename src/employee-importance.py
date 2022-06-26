@@ -1,33 +1,35 @@
-"""
-# Definition for Employee.
-class Employee:
-    def __init__(self, id: int, importance: int, subordinates: List[int]):
-        self.id = id
-        self.importance = importance
-        self.subordinates = subordinates
-"""
+# 690. Employee Importance
+#
+# Solution: DFS + accumulate answer
+#
+# Create the adj list id -> (importance, subordinates)
+# DFS on this adj list while accumulating the answer
+# Return the answer
+
+from collections import namedtuple
 
 class Solution:
   def __init__(self):
-    self.d = collections.defaultdict(list)
-    self.val = {}
+    self.adj = {}
     self.ans = 0
     self.vis = [0] * int(2e5)
 
   def getImportance(self, employees: List['Employee'], id: int) -> int:
-    for i in range(len(employees)):
-      eid, imp, sub = employees[i].id, employees[i].importance, employees[
-        i].subordinates
-      self.d[eid] = sub
-      self.val[eid] = imp
+    I = namedtuple('I', 'v s')
+
+    for employee in employees:
+      self.adj[employee.id] = I(
+        employee.importance,
+        employee.subordinates
+      )
 
     self.dfs(id)
+
     return self.ans
 
   def dfs(self, v):
     self.vis[v] = 1
-    self.ans += self.val[v]
-    for u in self.d[v]:
+    self.ans += self.adj[v].v
+    for u in self.adj[v].s:
       if not self.vis[u]:
-        self.vis[u] = 1
         self.dfs(u)
