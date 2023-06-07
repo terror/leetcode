@@ -18,10 +18,7 @@ class Solution:
     I = namedtuple('I', 'v s')
 
     for employee in employees:
-      self.adj[employee.id] = I(
-        employee.importance,
-        employee.subordinates
-      )
+      self.adj[employee.id] = I(employee.importance, employee.subordinates)
 
     self.dfs(id)
 

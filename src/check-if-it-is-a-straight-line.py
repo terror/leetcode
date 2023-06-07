@@ -13,6 +13,9 @@ class Solution:
     def get_validator(m, b):
       return lambda point: point.y == (m * point.x) + b
 
-    validator = get_validator(*(lambda m: (m, b.y - (m * b.x)))((b.y - a.y) / (b.x - a.x) if b.x - a.x != 0 else 0))
+    validator = get_validator(
+      *(lambda m: (m, b.y - (m * b.x)))((b.y - a.y) / (b.x - a.x) if b.x -
+                                        a.x != 0 else 0)
+    )
 
     return all(validator(point) for point in points)

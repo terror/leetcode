@@ -17,6 +17,7 @@ class Solution:
 
     for i in range(n):
       if not vis[i]:
-        dfs(i); cc += 1
+        dfs(i)
+        cc += 1
 
     return cc == 1

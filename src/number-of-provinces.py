@@ -1,11 +1,13 @@
 class Solution:
   def findCircleNum(self, c: List[List[int]]) -> int:
-    n = len(c); adj = defaultdict(set)
+    n = len(c)
+    adj = defaultdict(set)
 
     for i in range(n):
       for j in range(n):
         if c[i][j]:
-          adj[i].add(j); adj[j].add(i)
+          adj[i].add(j)
+          adj[j].add(i)
 
     ans, vis = 0, defaultdict(bool)
 

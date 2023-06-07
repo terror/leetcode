@@ -8,15 +8,18 @@ class Solution:
 
     vis = defaultdict(bool)
 
-    for x in q[0]: vis[x] = True
+    for x in q[0]:
+      vis[x] = True
 
-    ans = 0; di = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+    ans = 0
+    di = [(1, 0), (0, 1), (-1, 0), (0, -1)]
 
     def in_bounds(x, y):
       return x >= 0 and x < len(grid) and y >= 0 and y < len(grid[0])
 
     while q:
-      t = q.pop(0); next_batch = []
+      t = q.pop(0)
+      next_batch = []
 
       for u, v in t:
         for xo, yo in di:

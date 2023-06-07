@@ -16,7 +16,8 @@ class Solution:
     studied = 0
 
     while q:
-      t = q.pop(0); next = set()
+      t = q.pop(0)
+      next = set()
 
       studied += len(t)
 
